@@ -19,6 +19,7 @@ public record EventDTO(
     String description,
 
     AddressDTO address,
+    
     String linkMaps,
 
     @NotNull(message = "O campo status é obrigatório")

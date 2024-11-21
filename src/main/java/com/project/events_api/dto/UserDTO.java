@@ -12,7 +12,7 @@ public record UserDTO(
     Long id,
 
     @NotBlank(message = "O campo login é obrigatório")
-    String login,
+    String username,
 
     @NotBlank(message = "O campo senha é obrigatório")
     @Min(value = 8, message = "A senha deve ter no mínimo 8 caracteres")
