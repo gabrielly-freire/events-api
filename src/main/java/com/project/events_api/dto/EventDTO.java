@@ -41,6 +41,8 @@ public record EventDTO(
 
     Integer participantsNumber,
 
-    Long bannerId
+    String banner,
+
+    Double price
 ) {
 }

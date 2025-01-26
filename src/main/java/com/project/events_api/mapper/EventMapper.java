@@ -36,6 +36,11 @@ public class EventMapper {
                         eventStatusMapper.toModel(dto.status()))
                 .type(
                         eventTypeMapper.toModel(dto.type()))
+                .linkMaps(dto.linkMaps())
+                .link(dto.link())
+                .participantsNumber(dto.participantsNumber())
+                .banner(dto.banner())
+                .price(dto.price())
                 .build();
 
         return event;
@@ -55,7 +60,8 @@ public class EventMapper {
                 model.getEndDate(),
                 model.getLink(),
                 model.getParticipantsNumber(),
-                model.getBannerId());
+                model.getBanner(),
+                model.getPrice());
 
         return dto;
     }

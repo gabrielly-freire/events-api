@@ -69,6 +69,7 @@ public class Event extends BaseEntity {
     @Column(name = "participants_number")
     private Integer participantsNumber; 
     
-    @Column(name = "banner_id")
-    private Long bannerId; 
+    private String banner; 
+
+    private Double price;
 }

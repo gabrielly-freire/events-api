@@ -85,4 +85,64 @@ public class EventController {
         eventService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Retorna eventos por nome", description = "Retorna eventos cadastrados na base de dados por nome")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<EventDTO>> findByName(@PathVariable String name) {
+        return ResponseEntity.ok(eventService.findByName(name));
+    }
+
+    @Operation(summary = "Retorna eventos por categoria", description = "Retorna eventos cadastrados na base de dados por categoria")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<EventDTO>> findByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(eventService.findByCategory(category));
+    }
+
+    @Operation(summary = "Retorna eventos gratuitos", description = "Retorna eventos cadastrados na base de dados gratuitos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    @GetMapping("/free")
+    public ResponseEntity<List<EventDTO>> findEventFree(){
+        return ResponseEntity.ok(eventService.findEventFree());
+    }
+
+    @Operation(summary = "Retorna eventos pagos", description = "Retorna eventos cadastrados na base de dados pagos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    @GetMapping("/not-free")
+    public ResponseEntity<List<EventDTO>> findEventNotFree(){
+        return ResponseEntity.ok(eventService.findEventNotFree());
+    }
+
+    @Operation(summary = "Retorna eventos do fim de semana", description = "Retorna eventos cadastrados na base de dados do fim de semana")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    @GetMapping("/weekend")
+    public ResponseEntity<List<EventDTO>> findWeekendEvents() {
+        return ResponseEntity.ok(eventService.findWeekendEvents());
+    }
+
+    @Operation(summary = "Retorna eventos do dia", description = "Retorna eventos cadastrados na base de dados do dia")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Eventos retornados com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    @GetMapping("/today")
+    public ResponseEntity<List<EventDTO>> findEventsToday() {
+        return ResponseEntity.ok(eventService.findEventsToday());
+    }
 }

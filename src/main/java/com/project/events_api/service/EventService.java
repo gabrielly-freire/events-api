@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.project.events_api.dto.EventDTO;
 import com.project.events_api.mapper.EventMapper;
+import com.project.events_api.model.Category;
 import com.project.events_api.model.Event;
+import com.project.events_api.repository.CategoryRepository;
 import com.project.events_api.repository.EventRepository;
 import com.project.events_api.util.ResourceNotFoundException;
 
@@ -23,11 +25,14 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository, EventMapper eventMapper) {
+    public EventService(EventRepository eventRepository, EventMapper eventMapper,
+            CategoryRepository categoryRepository) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     /**
@@ -91,6 +96,75 @@ public class EventService {
     }
 
     /**
+     * Busca eventos pelo nome
+     * 
+     * @param name - Nome do evento
+     * @return Lista de DTOs de eventos
+     */
+    public List<EventDTO> findByName(String name) {
+        return eventRepository.findByNameContaining(name).stream()
+                .map(eventMapper::toDTO)
+                .toList();
+    }
+
+    /**
+     * Busca eventos pela categoria musical
+     * 
+     * @return Lista de DTOs de eventos
+     */
+    public List<EventDTO> findByCategory(String name) {
+        Category category = categoryRepository.findByName(name).orElseThrow(
+                () -> new ResourceNotFoundException("Categoria não encontrada"));
+
+        return eventRepository.findByCategory(category).stream()
+                .map(eventMapper::toDTO)
+                .toList();
+    }
+
+    /**
+     * Busca eventos gratuitos
+     * 
+     * @return Lista de DTOs de eventos
+     */
+    public List<EventDTO> findEventFree(){
+        return eventRepository.findByPriceIsNullOrPrice(0.0).stream()
+                .map(eventMapper::toDTO)
+                .toList();
+    }
+
+    /**
+     * Busca eventos pagos
+     * 
+     * @return Lista de DTOs de eventos
+     */
+    public List<EventDTO> findEventNotFree(){
+        return eventRepository.findByPriceNot(0.0).stream()
+                .map(eventMapper::toDTO)
+                .toList();
+    }
+
+    /**
+     * Busca eventos que ocorrem no fim de semana
+     * 
+     * @return Lista de DTOs de eventos
+     */
+    public List<EventDTO> findWeekendEvents(){
+        return eventRepository.findWeekendEvents().stream()
+                .map(eventMapper::toDTO)
+                .toList();
+    }
+
+    /**
+     * Busca eventos que ocorrem hoje
+     * 
+     * @return Lista de DTOs de eventos
+     */
+    public List<EventDTO> findEventsToday(){
+        return eventRepository.findEventsToday().stream()
+                .map(eventMapper::toDTO)
+                .toList();
+    }
+    /**
      * Valida se o evento existe pelo ID
      * 
      * @param id - ID do evento a ser verificado
@@ -113,7 +187,7 @@ public class EventService {
         oldEvent.setEndDate(newEvent.getEndDate());
         oldEvent.setLink(newEvent.getLink());
         oldEvent.setParticipantsNumber(newEvent.getParticipantsNumber());
-        oldEvent.setBannerId(newEvent.getBannerId());
+        oldEvent.setBanner(newEvent.getBanner());
         return oldEvent;
     }
 }
