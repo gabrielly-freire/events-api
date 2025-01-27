@@ -1,5 +1,8 @@
 package com.project.events_api.service;
 
+import java.sql.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,7 +152,14 @@ public class EventService {
      * @return Lista de DTOs de eventos
      */
     public List<EventDTO> findWeekendEvents(){
-        return eventRepository.findWeekendEvents().stream()
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(DayOfWeek.SUNDAY);
+        LocalDate endOfWeek = today.with(DayOfWeek.SATURDAY);
+        
+        Date startOfWeekDate = Date.valueOf(startOfWeek);
+        Date endOfWeekDate = Date.valueOf(endOfWeek);
+        
+        return eventRepository.findWeekendEvents(startOfWeekDate, endOfWeekDate).stream()
                 .map(eventMapper::toDTO)
                 .toList();
     }
