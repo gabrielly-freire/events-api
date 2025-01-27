@@ -1,6 +1,7 @@
 package com.project.events_api.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -32,10 +33,10 @@ public record EventDTO(
     CategoryDTO category,
 
     @NotNull(message = "O campo data de início é obrigatório")
-    LocalDate startDate,
+    LocalDateTime startDate,
 
     @NotNull(message = "O campo data de fim é obrigatório")
-    LocalDate endDate,
+    LocalDateTime endDate,
 
     String link,
 

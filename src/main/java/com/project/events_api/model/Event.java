@@ -1,6 +1,7 @@
 package com.project.events_api.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.SQLRestriction;
 
@@ -58,10 +59,10 @@ public class Event extends BaseEntity {
     private Category category; 
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate; 
+    private LocalDateTime startDate; 
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate endDate; 
+    private LocalDateTime endDate; 
 
     @Column(name = "link")
     private String link; 
